@@ -6,4 +6,9 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FishMarket.Core\FishMarket.Core.csproj" />
+    <ProjectReference Include="..\FishMarket.Data\FishMarket.Data.csproj" />
+  </ItemGroup>
+
 </Project>

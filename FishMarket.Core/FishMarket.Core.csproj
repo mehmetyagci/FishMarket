@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FishMarket.Domain\FishMarket.Domain.csproj" />
+    <ProjectReference Include="..\FishMarket.Dto\FishMarket.Dto.csproj" />
   </ItemGroup>
 
 </Project>

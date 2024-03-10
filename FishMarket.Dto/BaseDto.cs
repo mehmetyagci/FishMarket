@@ -1,7 +1,6 @@
 ﻿namespace FishMarket.Dto
 {
-    public class Class1
+    public abstract class BaseDto
     {
-
     }
 }
