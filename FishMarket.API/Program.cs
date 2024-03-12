@@ -47,7 +47,7 @@ namespace FishMarket.API
                 });
             });
 
-            builder.Services.AddTransient(typeof(IService<,>), typeof(Service<,>));
+            builder.Services.AddTransient(typeof(IService<,,,>), typeof(Service<,,,>));
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             //builder.Services.AddScoped(typeof(IService<FishMarket.Domain.Fish, FishMarket.Dto.FishDto>), typeof(Service<FishMarket.Domain.Fish, FishMarket.Dto.FishDto>));
 
