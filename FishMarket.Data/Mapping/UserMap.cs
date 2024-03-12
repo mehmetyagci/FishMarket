@@ -14,7 +14,8 @@ namespace FishMarket.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<User> modelBuilder)
         {
-            modelBuilder.HasKey(a => a.Id);
+            modelBuilder.HasKey(x => x.Id);
+            modelBuilder.HasIndex(x => x.Email).IsUnique(true);
             modelBuilder.Property(x => x.Email).IsRequired().HasMaxLength(100);
             modelBuilder.Property(x => x.Password).IsRequired().HasMaxLength(100);
 

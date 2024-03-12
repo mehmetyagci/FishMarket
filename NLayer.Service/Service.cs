@@ -6,6 +6,8 @@ using FishMarket.Domain;
 using FishMarket.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using NLayer.Service.Exceptions;
+using FluentValidation;
 
 namespace NLayer.Service
 {
@@ -13,22 +15,32 @@ namespace NLayer.Service
         where Entity : BaseEntity 
         where Dto : BaseDto
         where CreateDto : BaseDto
-        where UpdateDto : BaseDto
+        where UpdateDto : BaseUpdateDto
     {
         protected readonly IRepository<Entity> _repository;
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IMapper _mapper;
 
-        public Service(IRepository<Entity> repository, IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IValidator<CreateDto> _createValidator;
+        private readonly IValidator<UpdateDto> _updateValidator;
+
+        public Service(IRepository<Entity> repository, IUnitOfWork unitOfWork, IMapper mapper,
+            IValidator<CreateDto> createValidator, IValidator<UpdateDto> updateValidator)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task<ResponseDto<Dto>> GetByIdAsync(long id)
         {
             var entity = await _repository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                throw new NotFoundExcepiton($"{typeof(Entity).Name}({id}) not found");
+            }
             var dto = _mapper.Map<Dto>(entity);
             return ResponseDto<Dto>.Success(StatusCodes.Status200OK, dto);
         }
@@ -40,18 +52,26 @@ namespace NLayer.Service
             return ResponseDto<IEnumerable<Dto>>.Success(StatusCodes.Status200OK, dtos);
         }
 
-        public async Task<ResponseDto<Dto>> CreateAsync(CreateDto dto)
+        public async Task<ResponseDto<Dto>> CreateAsync(CreateDto createDto)
         {
-            Entity newEntity = _mapper.Map<Entity>(dto);
+            await _createValidator.ValidateAndThrowAsync(createDto);
+
+            Entity newEntity = _mapper.Map<Entity>(createDto);
             await _repository.AddAsync(newEntity);
             await _unitOfWork.CommitAsync();
             var newDto = _mapper.Map<Dto>(newEntity);
             return ResponseDto<Dto>.Success(StatusCodes.Status200OK, newDto);
         }
 
-        public async Task<ResponseDto<NoContentDto>> UpdateAsync(UpdateDto dto)
+        public async Task<ResponseDto<NoContentDto>> UpdateAsync(UpdateDto updateDto)
         {
-            var entity = _mapper.Map<Entity>(dto);
+            await _updateValidator.ValidateAndThrowAsync(updateDto);
+
+            var entity = _mapper.Map<Entity>(updateDto);
+            if (entity == null)
+            {
+                throw new NotFoundExcepiton($"{typeof(Entity).Name}({updateDto.Id}) not found");
+            }
             _repository.Update(entity);
             await _unitOfWork.CommitAsync();
             return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
@@ -60,6 +80,10 @@ namespace NLayer.Service
         public async Task<ResponseDto<NoContentDto>> DeleteAsync(long id)
         {
             var entity = await _repository.GetByIdAsync(id);
+            if (entity == null)
+            {
+                throw new NotFoundExcepiton($"{typeof(Entity).Name}({id}) not found");
+            }
             _repository.Delete(entity);
             await _unitOfWork.CommitAsync();
             return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);

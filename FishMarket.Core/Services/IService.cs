@@ -13,7 +13,7 @@ namespace FishMarket.Core.Services
         where Entity : BaseEntity 
         where Dto : BaseDto
         where CreateDto : BaseDto
-        where UpdateDto : BaseDto
+        where UpdateDto : BaseUpdateDto
     {
         Task<ResponseDto<Dto>> GetByIdAsync(long id);
         Task<ResponseDto<IEnumerable<Dto>>> GetAllAsync();

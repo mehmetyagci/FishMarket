@@ -2,6 +2,7 @@
 using FishMarket.Core.Services;
 using FishMarket.Domain;
 using FishMarket.Dto;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLayer.Service;
@@ -11,12 +12,16 @@ namespace FishMarket.API.Controllers
     public class FishController : FMControllerBase
     {
         private readonly IService<Fish, FishDto, FishCreateDto, FishUpdateDto> _fishService;
-        protected readonly IMapper _mapper;
 
-        public FishController(IService<Fish, FishDto, FishCreateDto, FishUpdateDto> fishService, IMapper mapper)
+        private readonly IValidator<FishCreateDto> _createValidator;
+        private readonly IValidator<FishUpdateDto> _updateValidator;
+
+        public FishController(IService<Fish, FishDto, FishCreateDto, FishUpdateDto> fishService, IMapper mapper,
+            IValidator<FishCreateDto> createValidator, IValidator<FishUpdateDto> updateValidator)
         {
             _fishService = fishService;
-            _mapper = mapper;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         [HttpGet]
@@ -29,10 +34,6 @@ namespace FishMarket.API.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var fish = await _fishService.GetByIdAsync(id);
-            if(fish == null)
-            {
-                return CreateActionResult(ResponseDto<NoContentDto>.Fail(404, $"Fish with id: {id} not found"));
-            }
             return CreateActionResult(fish);
         }
 
@@ -46,6 +47,12 @@ namespace FishMarket.API.Controllers
         public async Task<IActionResult> UpdateAsync(FishUpdateDto fishUpdateDto)
         {
             return CreateActionResult(await _fishService.UpdateAsync(fishUpdateDto));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            return CreateActionResult(await _fishService.DeleteAsync(id));
         }
     }
 }
