@@ -27,7 +27,6 @@ namespace FishMarket.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services
                 .AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()))
                 .AddFluentValidation();
@@ -35,14 +34,6 @@ namespace FishMarket.API
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-
-            //builder.Services
-            //    .AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()))
-            //    .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<FishCreateDtoValidator>());
-            //builder.Services.Configure<ApiBehaviorOptions>(options =>
-            //{
-            //    options.SuppressModelStateInvalidFilter = true;
-            //});
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

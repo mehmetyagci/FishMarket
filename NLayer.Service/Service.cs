@@ -67,11 +67,14 @@ namespace NLayer.Service
         {
             await _updateValidator.ValidateAndThrowAsync(updateDto);
 
-            var entity = _mapper.Map<Entity>(updateDto);
-            if (entity == null)
+            var checkEntity = await _repository.GetByIdAsync(updateDto.Id);
+            if (checkEntity == null)
             {
                 throw new NotFoundExcepiton($"{typeof(Entity).Name}({updateDto.Id}) not found");
             }
+            _repository.Detach(checkEntity);
+
+            var entity = _mapper.Map<Entity>(updateDto);
             _repository.Update(entity);
             await _unitOfWork.CommitAsync();
             return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);

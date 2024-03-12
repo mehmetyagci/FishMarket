@@ -10,5 +10,6 @@ namespace FishMarket.Core.Repositories
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void Detach(T entity);
     }
 }

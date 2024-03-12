@@ -40,5 +40,9 @@ namespace FishMarket.Repository
         {
             _dbSet.Remove(entity);
         }
+        public void Detach(T entity)
+        {
+            _dbContext.Entry(entity).State = EntityState.Detached;
+        }
     }
 }

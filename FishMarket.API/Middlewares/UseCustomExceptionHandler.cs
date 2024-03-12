@@ -24,6 +24,7 @@ namespace FishMarket.API.Middlewares
                         _ => 500
                     };
                     context.Response.StatusCode = statusCode;
+                    // 500 Server hataları için, detay yaplaşmayan bir hata fırlat ve hatayı logla.
                     var errorMessage = GetFullErrorMessage(exceptionFeature.Error);
                     var response = ResponseDto<NoContentDto>.Fail(statusCode, errorMessage);
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
