@@ -15,10 +15,10 @@ namespace FishMarket.Data.Mapping
         public void Configure(EntityTypeBuilder<Fish> modelBuilder)
         {
             modelBuilder.HasKey(x => x.Id);
-            modelBuilder.HasIndex(x => x.Name).IsUnique(true);
-            modelBuilder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            modelBuilder.HasIndex(x => x.Name).IsUnique();
+            modelBuilder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             modelBuilder.Property(x => x.Price).IsRequired().HasPrecision(18, 2);
-
+            modelBuilder.Property(x => x.Image).HasMaxLength(255);
             modelBuilder.ToTable("Fish");
         }
     }

@@ -13,8 +13,10 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NLayer.Service;
 using NLayer.Service.Infrastructure;
+using NLayer.Service.Services;
 using System;
 using System.Reflection;
 
@@ -37,7 +39,11 @@ namespace FishMarket.API
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fish Market API", Version = "v1" });
+            });
 
             #region Auto Mapper Configuration
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
@@ -54,6 +60,7 @@ namespace FishMarket.API
             builder.Services.AddSingleton<IValidator<FishCreateDto>, FishCreateDtoValidator>();
             builder.Services.AddSingleton<IValidator<FishUpdateDto>, FishUpdateDtoValidator>();
 
+            builder.Services.AddSingleton<IImageService, ImageService>();
             builder.Services.AddTransient(typeof(IService<,,,>), typeof(Service<,,,>));
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
@@ -70,6 +77,7 @@ namespace FishMarket.API
 
             app.UseHttpsRedirection();
             app.UseCustomException();
+            app.UseStaticFiles();    
 
             app.UseAuthorization();
 

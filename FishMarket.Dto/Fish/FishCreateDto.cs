@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+
 
 namespace FishMarket.Dto
 {
     public class FishCreateDto : BaseDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }  
         public decimal Price { get; set; }
-        public string Image { get; set; } = string.Empty;
+        public IFormFile ImageFile { get; set; }
     }
 }

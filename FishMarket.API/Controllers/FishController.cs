@@ -2,6 +2,7 @@
 using FishMarket.Core.Services;
 using FishMarket.Domain;
 using FishMarket.Dto;
+using FishMarket.Dto.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,21 @@ namespace FishMarket.API.Controllers
 {
     public class FishController : FMControllerBase
     {
-        private readonly IService<Fish, FishDto, FishCreateDto, FishUpdateDto> _fishService;
+        private readonly IService<Fish, FishDto, FishCreateDto, FishUpdateDto> _service;
+        private readonly IImageService _imageService;
 
         private readonly IValidator<FishCreateDto> _createValidator;
         private readonly IValidator<FishUpdateDto> _updateValidator;
 
-        public FishController(IService<Fish, FishDto, FishCreateDto, FishUpdateDto> fishService, IMapper mapper,
-            IValidator<FishCreateDto> createValidator, IValidator<FishUpdateDto> updateValidator)
+        public FishController(
+            IService<Fish, FishDto, FishCreateDto, FishUpdateDto> service,
+            IImageService imageService,
+            IMapper mapper,
+            IValidator<FishCreateDto> createValidator,
+            IValidator<FishUpdateDto> updateValidator)
         {
-            _fishService = fishService;
+            _service = service;
+            _imageService = imageService;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
@@ -27,32 +34,37 @@ namespace FishMarket.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateActionResult(await _fishService.GetAllAsync());
+            return CreateActionResult(await _service.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var fish = await _fishService.GetByIdAsync(id);
+            var fish = await _service.GetByIdAsync(id);
             return CreateActionResult(fish);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(FishCreateDto fishCreateDto)
+        [RequestSizeLimit(5 * 1024 * 1024)]
+        public async Task<IActionResult> CreateAsync([FromForm] FishCreateDto fishCreateDto)
         {
-            return CreateActionResult(await _fishService.CreateAsync(fishCreateDto));
+            var imagePath = await _imageService.SaveImageAsync(fishCreateDto.ImageFile);
+
+            var result = await _service.CreateAsync(fishCreateDto);
+
+            return CreateActionResult(result);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(FishUpdateDto fishUpdateDto)
         {
-            return CreateActionResult(await _fishService.UpdateAsync(fishUpdateDto));
+            return CreateActionResult(await _service.UpdateAsync(fishUpdateDto));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            return CreateActionResult(await _fishService.DeleteAsync(id));
+            return CreateActionResult(await _service.DeleteAsync(id));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace NLayer.Service
         where CreateDto : BaseDto
         where UpdateDto : BaseUpdateDto
     {
-        protected readonly IRepository<Entity> _repository;
+        private readonly IRepository<Entity> _repository;
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IMapper _mapper;
 
