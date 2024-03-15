@@ -1,11 +1,9 @@
-using AutoMapper;
 using FishMarket.API.Filters;
 using FishMarket.API.Middlewares;
 using FishMarket.Core;
 using FishMarket.Core.Repositories;
 using FishMarket.Core.Services;
 using FishMarket.Data;
-using FishMarket.Domain;
 using FishMarket.Dto;
 using FishMarket.Dto.Validations;
 using FishMarket.Repository;
@@ -14,10 +12,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using NLayer.Service;
 using NLayer.Service.Infrastructure;
 using NLayer.Service.Services;
-using System;
 using System.Reflection;
 
 namespace FishMarket.API
@@ -57,11 +53,15 @@ namespace FishMarket.API
                 });
             });
 
-            builder.Services.AddSingleton<IValidator<FishCreateDto>, FishCreateDtoValidator>();
-            builder.Services.AddSingleton<IValidator<FishUpdateDto>, FishUpdateDtoValidator>();
+            builder.Services.AddTransient<IValidator<FishCreateDto>, FishCreateDtoValidator>();
+            builder.Services.AddTransient<IValidator<FishUpdateDto>, FishUpdateDtoValidator>();
 
-            builder.Services.AddSingleton<IImageService, ImageService>();
+            builder.Services.AddTransient<IImageService, ImageService>();
+
             builder.Services.AddTransient(typeof(IService<,,,>), typeof(Service<,,,>));
+
+            builder.Services.AddTransient(typeof(IFishService), typeof(FishService));
+
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             builder.Services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));

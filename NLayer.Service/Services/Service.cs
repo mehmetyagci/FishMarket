@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Http;
 using NLayer.Service.Exceptions;
 using FluentValidation;
 
-namespace NLayer.Service
+namespace NLayer.Service.Services
 {
-    public class Service<Entity, Dto, CreateDto, UpdateDto> : IService<Entity, Dto, CreateDto, UpdateDto> 
-        where Entity : BaseEntity 
+    public class Service<Entity, Dto, CreateDto, UpdateDto> : IService<Entity, Dto, CreateDto, UpdateDto>
+        where Entity : BaseEntity
         where Dto : BaseDto
         where CreateDto : BaseDto
         where UpdateDto : BaseUpdateDto
@@ -24,8 +24,12 @@ namespace NLayer.Service
         private readonly IValidator<CreateDto> _createValidator;
         private readonly IValidator<UpdateDto> _updateValidator;
 
-        public Service(IRepository<Entity> repository, IUnitOfWork unitOfWork, IMapper mapper,
-            IValidator<CreateDto> createValidator, IValidator<UpdateDto> updateValidator)
+        public Service(
+            IRepository<Entity> repository, 
+            IUnitOfWork unitOfWork, 
+            IMapper mapper,
+            IValidator<CreateDto> createValidator, 
+            IValidator<UpdateDto> updateValidator)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
