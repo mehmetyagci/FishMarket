@@ -33,8 +33,25 @@ namespace NLayer.Service.Services
                 await imageFile.CopyToAsync(stream);
             }
 
-            var relativePath = Path.Combine("uploads", "images", fileName);
-            return relativePath;
+            return fileName;
+        }
+
+        public Task DeleteImageAsync(string imagePath)
+        {
+            if(imagePath == null || string.IsNullOrEmpty(imagePath))
+                throw new ArgumentException("Invalid image path");
+
+            var fullPath = Path.Combine(_uploadsFolder, imagePath);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+                return Task.CompletedTask;
+            }
+            else
+            {
+                return Task.CompletedTask;
+            }
         }
     }
 }

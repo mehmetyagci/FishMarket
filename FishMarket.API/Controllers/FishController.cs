@@ -42,23 +42,22 @@ namespace FishMarket.API.Controllers
         [RequestSizeLimit(5 * 1024 * 1024)]
         public async Task<IActionResult> CreateAsync([FromForm] FishCreateDto fishCreateDto)
         {
-            var imagePath = await _imageService.SaveImageAsync(fishCreateDto.ImageFile);
-
-            var result = await _fishService.CreateWithImageAsync(fishCreateDto, imagePath);
+            var result = await _fishService.CreateWithImageAsync(fishCreateDto);
 
             return CreateActionResult(result);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(FishUpdateDto fishUpdateDto)
+        [RequestSizeLimit(5 * 1024 * 1024)]
+        public async Task<IActionResult> UpdateAsync([FromForm] FishUpdateDto fishUpdateDto)
         {
-            return CreateActionResult(await _fishService.UpdateAsync(fishUpdateDto));
+            return CreateActionResult(await _fishService.UpdateWithImageAsync(fishUpdateDto));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            return CreateActionResult(await _fishService.DeleteAsync(id));
+            return CreateActionResult(await _fishService.DeleteWithImageAsync(id));
         }
     }
 }
