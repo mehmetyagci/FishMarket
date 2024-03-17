@@ -11,5 +11,6 @@ namespace FishMarket.Core.Repositories
         void Update(T entity);
         void Delete(T entity);
         void Detach(T entity);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> condition);
     }
 }

@@ -2,6 +2,7 @@
 using FishMarket.Data;
 using FishMarket.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FishMarket.Repository
 {
@@ -43,6 +44,10 @@ namespace FishMarket.Repository
         public void Detach(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Detached;
+        }
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> condition)
+        {
+            return await _dbSet.FirstOrDefaultAsync(condition);
         }
     }
 }

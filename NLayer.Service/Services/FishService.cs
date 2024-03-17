@@ -75,7 +75,7 @@ namespace NLayer.Service.Services
             return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }
 
-        public async Task<ResponseDto<NoContentDto>> DeleteWithImageAsync(int id)
+        public async Task<ResponseDto<NoContentDto>> DeleteWithImageAsync(long id)
         {
             var entity = await _repository.GetByIdAsync(id);
             if (entity == null)

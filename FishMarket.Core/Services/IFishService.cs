@@ -7,6 +7,6 @@ namespace FishMarket.Core.Services
     {
         Task<ResponseDto<FishDto>> CreateWithImageAsync(FishCreateDto fishCreateDto);
         Task<ResponseDto<NoContentDto>> UpdateWithImageAsync(FishUpdateDto fishUpdateDto);
-        Task<ResponseDto<NoContentDto>> DeleteWithImageAsync(int id);
+        Task<ResponseDto<NoContentDto>> DeleteWithImageAsync(long id);
     }
 }

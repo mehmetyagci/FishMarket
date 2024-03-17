@@ -12,14 +12,18 @@ namespace NLayer.Service.Infrastructure
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile() {
-
+            #region User
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserRegisterDto, User>();
 
+            #endregion User
+
+            #region Fish
             CreateMap<Fish, FishDto>().ReverseMap();
             CreateMap<FishCreateDto, Fish>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<FishUpdateDto, Fish>();
-
+            #endregion Fish
         }
     }
 }

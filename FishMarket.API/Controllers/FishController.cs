@@ -14,15 +14,12 @@ namespace FishMarket.API.Controllers
     public class FishController : FMControllerBase
     {
         private readonly IFishService _fishService;
-        private readonly IImageService _imageService;
 
         public FishController(
             IFishService fishService,
-            IImageService imageService,
             IMapper mapper)
         {
             _fishService = fishService;
-            _imageService = imageService;
         }
 
         [HttpGet]
@@ -32,7 +29,7 @@ namespace FishMarket.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<IActionResult> GetByIdAsync(long id)
         {
             var fish = await _fishService.GetByIdAsync(id);
             return CreateActionResult(fish);
@@ -55,7 +52,7 @@ namespace FishMarket.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(long id)
         {
             return CreateActionResult(await _fishService.DeleteWithImageAsync(id));
         }

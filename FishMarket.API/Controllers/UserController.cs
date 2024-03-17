@@ -1,58 +1,40 @@
-﻿//using AutoMapper;
-//using UserMarket.Core.Services;
-//using UserMarket.Domain;
-//using UserMarket.Dto;
-//using FluentValidation;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using NLayer.Service;
+﻿using AutoMapper;
+using FishMarket.API.Authorization;
+using FishMarket.API.Controllers;
+using FishMarket.Core.Services;
+using FishMarket.Domain;
+using FishMarket.Dto;
+using FishMarket.Dto.Validations;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using NLayer.Service;
+using NLayer.Service.Services;
 
-//namespace UserMarket.API.Controllers
-//{
-//    public class UserController : FMControllerBase
-//    {
-//        private readonly IService<User, UserDto, UserCreateDto, UserUpdateDto> _userService;
+namespace FishMarket.API.Controllers
+{
+    public class UserController : FMControllerBase
+    {
+        private readonly IUserService _userService;
 
-//        private readonly IValidator<UserCreateDto> _createValidator;
-//        private readonly IValidator<UserUpdateDto> _updateValidator;
+        public UserController(IUserService userService, IMapper mapper)
+        {
+            _userService = userService;
+        }
 
-//        public UserController(IService<User, UserDto, UserCreateDto, UserUpdateDto> userService, IMapper mapper,
-//            IValidator<UserCreateDto> createValidator, IValidator<UserUpdateDto> updateValidator)
-//        {
-//            _userService = userService;
-//            _createValidator = createValidator;
-//            _updateValidator = updateValidator;
-//        }
+        [FMAllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAsync(UserRegisterDto userRegisterDto)
+        {
+            return CreateActionResult(await _userService.RegisterAsync(userRegisterDto));
+        }
 
-//        [HttpGet]
-//        public async Task<IActionResult> GetAllAsync()
-//        {
-//            return CreateActionResult(await _userService.GetAllAsync());
-//        }
-
-//        [HttpGet("{id}")]
-//        public async Task<IActionResult> GetByIdAsync(int id)
-//        {
-//            var user = await _userService.GetByIdAsync(id);
-//            return CreateActionResult(user);
-//        }
-
-//        [HttpPost]
-//        public async Task<IActionResult> CreateAsync(UserCreateDto userCreateDto)
-//        {
-//            return CreateActionResult(await _userService.CreateAsync(userCreateDto));
-//        }
-
-//        [HttpPut]
-//        public async Task<IActionResult> UpdateAsync(UserUpdateDto userUpdateDto)
-//        {
-//            return CreateActionResult(await _userService.UpdateAsync(userUpdateDto));
-//        }
-
-//        [HttpDelete("{id}")]
-//        public async Task<IActionResult> DeleteAsync(int id)
-//        {
-//            return CreateActionResult(await _userService.DeleteAsync(id));
-//        }
-//    }
-//}
+        [FMAllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> AuthenticateAsync(UserAuthenticateRequestDto model)
+        {
+            return CreateActionResult(await _userService.AuthenticateAsync(model));
+        }
+    }
+}

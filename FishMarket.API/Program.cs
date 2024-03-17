@@ -12,6 +12,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using NLayer.Service.Helpers;
 using NLayer.Service.Infrastructure;
 using NLayer.Service.Services;
 using System.Reflection;
@@ -45,6 +46,8 @@ namespace FishMarket.API
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #endregion Auto Mapper Configuration
 
+            builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
             builder.Services.AddDbContext<FishMarketDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), option =>
@@ -56,11 +59,18 @@ namespace FishMarket.API
             builder.Services.AddTransient<IValidator<FishCreateDto>, FishCreateDtoValidator>();
             builder.Services.AddTransient<IValidator<FishUpdateDto>, FishUpdateDtoValidator>();
 
+            builder.Services.AddTransient<IValidator<UserCreateDto>, UserCreateDtoValidator>();
+            builder.Services.AddTransient<IValidator<UserUpdateDto>, UserUpdateDtoValidator>();
+            builder.Services.AddTransient<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
+
+            builder.Services.AddScoped<IJWTService, JWTService>();
             builder.Services.AddTransient<IImageService, ImageService>();
+            // builder.Services.AddTransient<IEmailService, EmailService>();
 
             builder.Services.AddTransient(typeof(IService<,,,>), typeof(Service<,,,>));
 
             builder.Services.AddTransient(typeof(IFishService), typeof(FishService));
+            builder.Services.AddTransient(typeof(IUserService), typeof(UserService));
 
             builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
@@ -79,7 +89,7 @@ namespace FishMarket.API
             app.UseCustomException();
             app.UseStaticFiles();    
 
-            app.UseAuthorization();
+            app.UseMiddleware<JWTMiddleware>();
 
             app.MapControllers();
 
