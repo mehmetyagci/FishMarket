@@ -47,6 +47,7 @@ namespace FishMarket.API
             #endregion Auto Mapper Configuration
 
             builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
             builder.Services.AddDbContext<FishMarketDbContext>(options =>
             {
@@ -65,7 +66,8 @@ namespace FishMarket.API
 
             builder.Services.AddScoped<IJWTService, JWTService>();
             builder.Services.AddTransient<IImageService, ImageService>();
-            // builder.Services.AddTransient<IEmailService, EmailService>();
+            builder.Services.AddTransient<IEmailService, EmailService>();
+
 
             builder.Services.AddTransient(typeof(IService<,,,>), typeof(Service<,,,>));
 

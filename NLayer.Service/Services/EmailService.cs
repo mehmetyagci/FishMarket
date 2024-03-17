@@ -1,55 +1,51 @@
 ﻿using FishMarket.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using FishMarket.Dto;
+using Microsoft.Extensions.Options;
+using MimeKit;
+using NLayer.Service.Helpers;
 
 namespace NLayer.Service.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly string _smtpServer;
-        private readonly int _smtpPort;
-        private readonly string _smtpUsername;
-        private readonly string _smtpPassword;
+        private readonly MailSettings _mailSettings;
 
-        public EmailService(string smtpServer, int smtpPort, string smtpUsername, string smtpPassword)
+        public EmailService(IOptions<MailSettings> mailSettingsOptions)
         {
-            _smtpServer = smtpServer;
-            _smtpPort = smtpPort;
-            _smtpUsername = smtpUsername;
-            _smtpPassword = smtpPassword;
+            _mailSettings = mailSettingsOptions.Value;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string body)
+        public async Task<bool> SendEmailAsync(EmailDto mailData)
         {
             try
             {
-                using (var client = new SmtpClient(_smtpServer, _smtpPort))
+                using (MimeMessage emailMessage = new MimeMessage())
                 {
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(_smtpUsername, _smtpPassword);
-                    client.EnableSsl = true;
+                    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                    emailMessage.From.Add(emailFrom);
+                    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                    emailMessage.To.Add(emailTo);
 
-                    var mailMessage = new MailMessage
+                    emailMessage.Subject = mailData.EmailSubject;
+
+                    BodyBuilder emailBodyBuilder = new BodyBuilder();
+                    emailBodyBuilder.TextBody = mailData.EmailBody;
+
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    using (MailKit.Net.Smtp.SmtpClient mailClient = new MailKit.Net.Smtp.SmtpClient())
                     {
-                        From = new MailAddress(_smtpUsername),
-                        Subject = subject,
-                        Body = body,
-                        IsBodyHtml = true
-                    };
-
-                    mailMessage.To.Add(toEmail);
-
-                    await client.SendMailAsync(mailMessage);
+                        await mailClient.ConnectAsync(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+                        await mailClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
+                        await mailClient.SendAsync(emailMessage);
+                        await mailClient.DisconnectAsync(true);
+                    }
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Failed to send email.", ex);
+                return false;
             }
         }
     }

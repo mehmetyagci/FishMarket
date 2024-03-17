@@ -28,5 +28,12 @@ namespace FishMarket.API.Controllers
         {
             return CreateActionResult(await _userService.AuthenticateAsync(model));
         }
-    }
-}
+
+        [FMAllowAnonymous]
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail([FromQuery] UserVerifyEmailDto userVerifyEmailDto)
+        {
+            return CreateActionResult(await _userService.VerifyEmail(userVerifyEmailDto));
+        }
+    } // end of class
+} // end of namespace

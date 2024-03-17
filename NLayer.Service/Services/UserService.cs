@@ -7,6 +7,8 @@ using FishMarket.Dto;
 using FishMarket.Dto.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NLayer.Service.Exceptions;
 
 namespace NLayer.Service.Services
@@ -14,7 +16,7 @@ namespace NLayer.Service.Services
     public class UserService : Service<User, UserDto, UserCreateDto, UserUpdateDto>, IUserService
     {
         private readonly IJWTService _jwtService;
-        //private readonly IEmailService _emailService;
+        private readonly IEmailService _emailService;
 
         private readonly IRepository<User> _repository;
 
@@ -23,7 +25,7 @@ namespace NLayer.Service.Services
         private readonly IValidator<UserRegisterDto> _registerValidator;
         public UserService(
             IJWTService jwtService,
-          //  IEmailService emailService,
+            IEmailService emailService,
             IRepository<User> repository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
@@ -33,7 +35,7 @@ namespace NLayer.Service.Services
             base(repository, unitOfWork, mapper, createValidator, updateValidator)
         {
             _jwtService = jwtService;
-            //_emailService = emailService;
+            _emailService = emailService;
             _repository = repository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
@@ -52,7 +54,22 @@ namespace NLayer.Service.Services
             await _unitOfWork.CommitAsync();
             var newDto = _mapper.Map<UserDto>(newEntity);
 
-            //await _emailService.SendEmailAsync(userRegisterDto.Email, "subject", "body");
+            #region Token Creation and Related to user
+            var token = Guid.NewGuid().ToString();
+            var verificationLink = $"https://yourdomain.com/verify-email?email={userRegisterDto.Email}&token={token}";
+
+            await _emailService.SendEmailAsync(new EmailDto
+            {
+                EmailToId = userRegisterDto.Email,
+                EmailToName = userRegisterDto.Email,
+                EmailBody = $"Dear {userRegisterDto.Email},<br><br>Please click the link below to confirm your email address:<br><br><a href=\"{verificationLink}\">{verificationLink}</a>",
+                EmailSubject = "Confirm Your Email Address",
+            });
+
+            newEntity.VerificationToken = token;
+            _repository.Update(newEntity);
+            await _unitOfWork.CommitAsync();
+            #endregion Token Creation and Related to user
 
             return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }
@@ -64,9 +81,33 @@ namespace NLayer.Service.Services
             if (user == null || user.Password != userRegisterDto.Password)
                 throw new NotFoundExcepiton("Username or password is incorrect");
 
+            if (!user.IsEmailVerified)
+                throw new ClientSideException("User email is not verified.");
+
             var response = new UserAuthenticateResponseDto();
             response.Token = _jwtService.GenerateToken(user);
             return ResponseDto<UserAuthenticateResponseDto>.Success(StatusCodes.Status200OK, response);
+        }
+
+       
+        public async Task<ResponseDto<NoContentDto>> VerifyEmail(UserVerifyEmailDto userVerifyEmailDto)
+        {
+            var user = await _repository.FirstOrDefaultAsync(u => u.Email == userVerifyEmailDto.Email);
+
+            if (user == null)
+                throw new ClientSideException("User not found!");
+
+            if(user.IsEmailVerified)
+                throw new ClientSideException("User is already verified!");
+
+            if (user.VerificationToken == userVerifyEmailDto.Token)
+            {
+                user.IsEmailVerified = true;
+                _repository.Update(user);
+                await _unitOfWork.CommitAsync();
+                return ResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
+            }
+            return ResponseDto<NoContentDto>.Fail(StatusCodes.Status400BadRequest, "Invalid token.");
         }
     }
 }

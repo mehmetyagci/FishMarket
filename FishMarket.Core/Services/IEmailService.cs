@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FishMarket.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace FishMarket.Core.Services
 {
     public interface IEmailService
     {
-        Task SendEmailAsync(string toEmail, string subject, string body);
+        Task<bool> SendEmailAsync(EmailDto emailDto);
     }
 }
