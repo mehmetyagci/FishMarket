@@ -1,4 +1,4 @@
-﻿using FishMarket.API.Authorization;
+﻿using FishMarket.API.Filters;
 using FishMarket.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

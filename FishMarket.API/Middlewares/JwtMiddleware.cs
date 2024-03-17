@@ -17,7 +17,8 @@ namespace FishMarket.API.Middlewares
             var userId = jwtService.ValidateToken(token);
             if (userId != null)
             {
-                context.Items["User"] = await userService.GetByIdAsync(userId.Value);
+                var response = await userService.GetByIdAsync(userId.Value);
+                context.Items["User"] = response.Data;
             }
 
             await _next(context);

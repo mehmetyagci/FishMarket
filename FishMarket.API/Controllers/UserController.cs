@@ -1,16 +1,8 @@
 ﻿using AutoMapper;
-using FishMarket.API.Authorization;
-using FishMarket.API.Controllers;
+using FishMarket.API.Filters;
 using FishMarket.Core.Services;
-using FishMarket.Domain;
 using FishMarket.Dto;
-using FishMarket.Dto.Validations;
-using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NLayer.Service;
-using NLayer.Service.Services;
 
 namespace FishMarket.API.Controllers
 {
