@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NLayer.Service\FishMarket.Service.csproj" />
+    <ProjectReference Include="..\FishMarket.Service\FishMarket.Service.csproj" />
   </ItemGroup>
 
 </Project>

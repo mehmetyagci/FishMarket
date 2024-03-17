@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Core", "FishMark
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Data", "FishMarket.Data\FishMarket.Data.csproj", "{3B3AECF7-7F95-4E82-B9EF-35C6A5E75513}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Service", "NLayer.Service\FishMarket.Service.csproj", "{588EFF34-9789-4496-BD41-AB4D512BDD5A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Web", "FishMarket.Web\FishMarket.Web.csproj", "{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Service", "FishMarket.Service\FishMarket.Service.csproj", "{588EFF34-9789-4496-BD41-AB4D512BDD5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Dto", "FishMarket.Dto\FishMarket.Dto.csproj", "{42B5CEF1-BAF1-431C-8DE5-826216E688E8}"
 EndProject
@@ -41,10 +39,6 @@ Global
 		{588EFF34-9789-4496-BD41-AB4D512BDD5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588EFF34-9789-4496-BD41-AB4D512BDD5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{588EFF34-9789-4496-BD41-AB4D512BDD5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42B5CEF1-BAF1-431C-8DE5-826216E688E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42B5CEF1-BAF1-431C-8DE5-826216E688E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42B5CEF1-BAF1-431C-8DE5-826216E688E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
