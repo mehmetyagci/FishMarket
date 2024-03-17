@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayer.Service.Infrastructure
+namespace FishMarket.Service.Infrastructure
 {
     public class AutoMapperProfile : Profile
     {

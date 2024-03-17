@@ -6,8 +6,8 @@ using FishMarket.Dto.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NLayer.Service;
-using NLayer.Service.Services;
+using FishMarket.Service;
+using FishMarket.Service.Services;
 
 namespace FishMarket.API.Controllers
 {

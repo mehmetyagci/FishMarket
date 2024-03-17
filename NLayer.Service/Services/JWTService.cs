@@ -2,12 +2,12 @@
 using FishMarket.Domain;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NLayer.Service.Helpers;
+using FishMarket.Service.Helpers;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class JWTService : IJWTService
     {

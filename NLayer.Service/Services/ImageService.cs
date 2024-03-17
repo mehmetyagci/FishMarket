@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class ImageService : IImageService
     {

@@ -9,9 +9,9 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NLayer.Service.Exceptions;
+using FishMarket.Service.Exceptions;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class UserService : Service<User, UserDto, UserCreateDto, UserUpdateDto>, IUserService
     {

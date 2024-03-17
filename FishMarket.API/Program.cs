@@ -12,9 +12,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using NLayer.Service.Helpers;
-using NLayer.Service.Infrastructure;
-using NLayer.Service.Services;
+using FishMarket.Service.Helpers;
+using FishMarket.Service.Infrastructure;
+using FishMarket.Service.Services;
 using System.Reflection;
 
 namespace FishMarket.API

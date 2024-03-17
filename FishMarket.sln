@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Domain", "FishMarket.Domain\FishMarket.Domain.csproj", "{C9B1A522-7D75-4CE2-AF45-858755AE0804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Domain", "FishMarket.Domain\FishMarket.Domain.csproj", "{C9B1A522-7D75-4CE2-AF45-858755AE0804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Core", "FishMarket.Core\FishMarket.Core.csproj", "{D6CDA03D-9AF3-4605-AE9A-73CDC043BD17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Core", "FishMarket.Core\FishMarket.Core.csproj", "{D6CDA03D-9AF3-4605-AE9A-73CDC043BD17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Data", "FishMarket.Data\FishMarket.Data.csproj", "{3B3AECF7-7F95-4E82-B9EF-35C6A5E75513}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Data", "FishMarket.Data\FishMarket.Data.csproj", "{3B3AECF7-7F95-4E82-B9EF-35C6A5E75513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLayer.Service", "NLayer.Service\NLayer.Service.csproj", "{588EFF34-9789-4496-BD41-AB4D512BDD5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Service", "NLayer.Service\FishMarket.Service.csproj", "{588EFF34-9789-4496-BD41-AB4D512BDD5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Web", "FishMarket.Web\FishMarket.Web.csproj", "{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Web", "FishMarket.Web\FishMarket.Web.csproj", "{9E90D1AA-9E49-4BF4-A37F-D930EF70ABAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Dto", "FishMarket.Dto\FishMarket.Dto.csproj", "{42B5CEF1-BAF1-431C-8DE5-826216E688E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Dto", "FishMarket.Dto\FishMarket.Dto.csproj", "{42B5CEF1-BAF1-431C-8DE5-826216E688E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.API", "FishMarket.API\FishMarket.API.csproj", "{B8F3F6D2-AB4B-4D79-9F90-06A2F5A0231C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.API", "FishMarket.API\FishMarket.API.csproj", "{B8F3F6D2-AB4B-4D79-9F90-06A2F5A0231C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Repository", "FishMarket.Repository\FishMarket.Repository.csproj", "{8E84C312-AF9C-4EB2-8994-0B12B9508B97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Repository", "FishMarket.Repository\FishMarket.Repository.csproj", "{8E84C312-AF9C-4EB2-8994-0B12B9508B97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

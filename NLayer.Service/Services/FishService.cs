@@ -7,9 +7,9 @@ using FishMarket.Dto;
 using FishMarket.Dto.Validations;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using NLayer.Service.Exceptions;
+using FishMarket.Service.Exceptions;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class FishService : Service<Fish, FishDto, FishCreateDto, FishUpdateDto>, IFishService
     {

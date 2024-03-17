@@ -1,4 +1,4 @@
-﻿namespace NLayer.Service.Helpers
+﻿namespace FishMarket.Service.Helpers
 {
     public class AppSettings
     {

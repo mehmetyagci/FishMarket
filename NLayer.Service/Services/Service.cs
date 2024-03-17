@@ -6,10 +6,10 @@ using FishMarket.Domain;
 using FishMarket.Dto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
-using NLayer.Service.Exceptions;
+using FishMarket.Service.Exceptions;
 using FluentValidation;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class Service<Entity, Dto, CreateDto, UpdateDto> : IService<Entity, Dto, CreateDto, UpdateDto>
         where Entity : BaseEntity

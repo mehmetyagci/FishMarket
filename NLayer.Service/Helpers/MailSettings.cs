@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NLayer.Service.Helpers
+namespace FishMarket.Service.Helpers
 {
     public class MailSettings
     {

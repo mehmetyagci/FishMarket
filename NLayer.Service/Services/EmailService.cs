@@ -2,9 +2,9 @@
 using FishMarket.Dto;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using NLayer.Service.Helpers;
+using FishMarket.Service.Helpers;
 
-namespace NLayer.Service.Services
+namespace FishMarket.Service.Services
 {
     public class EmailService : IEmailService
     {

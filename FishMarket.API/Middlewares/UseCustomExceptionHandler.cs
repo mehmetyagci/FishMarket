@@ -1,6 +1,6 @@
 ﻿using FishMarket.Dto;
 using Microsoft.AspNetCore.Diagnostics;
-using NLayer.Service.Exceptions;
+using FishMarket.Service.Exceptions;
 using System.Text.Json;
 using FluentValidation;
 
