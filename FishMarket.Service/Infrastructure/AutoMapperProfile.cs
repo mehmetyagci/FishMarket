@@ -23,6 +23,7 @@ namespace FishMarket.Service.Infrastructure
             CreateMap<FishCreateDto, Fish>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
             CreateMap<FishUpdateDto, Fish>();
+            CreateMap<FishUpdateDto, FishDto>().ReverseMap();
             #endregion Fish
         }
     }
