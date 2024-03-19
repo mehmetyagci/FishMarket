@@ -31,6 +31,24 @@ namespace FishMarket.Web
                 options.MultipartBodyLengthLimit = 5 * 1024 * 1024; // 5 MB in bytes
             });
 
+            //builder.Services.AddAuthentication(options =>
+            //{
+            //    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = "your_issuer",
+            //        ValidAudience = "your_audience",
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your_secret_key"))
+            //    };
+            //});
+
             #region Auto Mapper Configuration
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #endregion Auto Mapper Configuration
@@ -54,6 +72,7 @@ namespace FishMarket.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

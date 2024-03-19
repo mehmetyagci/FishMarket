@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FishMarket.Core.Services
 {
-    public interface IJWTService
+    public interface IJwtService
     {
         public string GenerateToken(User user);
         public long? ValidateToken(string token);

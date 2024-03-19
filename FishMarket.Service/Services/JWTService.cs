@@ -9,15 +9,15 @@ using System.Text;
 
 namespace FishMarket.Service.Services
 {
-    public class JWTService : IJWTService
+    public class JwtService : IJwtService
     {
         private readonly AppSettings _appSettings;
 
-        public JWTService(IOptions<AppSettings> appSettings)
+        public JwtService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
-
+        
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();

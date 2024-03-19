@@ -64,7 +64,7 @@ namespace FishMarket.API
             builder.Services.AddTransient<IValidator<UserUpdateDto>, UserUpdateDtoValidator>();
             builder.Services.AddTransient<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 
-            builder.Services.AddScoped<IJWTService, JWTService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
             builder.Services.AddTransient<IImageService, ImageService>();
             builder.Services.AddTransient<IEmailService, EmailService>();
 

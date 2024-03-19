@@ -15,7 +15,7 @@ namespace FishMarket.Service.Services
 {
     public class UserService : Service<User, UserDto, UserCreateDto, UserUpdateDto>, IUserService
     {
-        private readonly IJWTService _jwtService;
+        private readonly IJwtService _jwtService;
         private readonly IEmailService _emailService;
 
         private readonly IRepository<User> _repository;
@@ -24,7 +24,7 @@ namespace FishMarket.Service.Services
         private readonly IValidator<UserUpdateDto> _updateValidator;
         private readonly IValidator<UserRegisterDto> _registerValidator;
         public UserService(
-            IJWTService jwtService,
+            IJwtService jwtService,
             IEmailService emailService,
             IRepository<User> repository,
             IUnitOfWork unitOfWork,

@@ -11,7 +11,7 @@ namespace FishMarket.API.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IUserService userService, IJWTService jwtService)
+        public async Task Invoke(HttpContext context, IUserService userService, IJwtService jwtService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var userId = jwtService.ValidateToken(token);
