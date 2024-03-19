@@ -21,6 +21,7 @@ namespace FishMarket.API.Middlewares
                         ClientSideException => 400,
                         NotFoundExcepiton => 404,
                         ValidationException => 400,
+                        UnauthorizedAccessException => 401,
                         _ => 500
                     };
                     context.Response.StatusCode = statusCode;

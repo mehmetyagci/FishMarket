@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FishMarket.Dto;
+using FishMarket.Web.Filters;
 using FishMarket.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FishMarket.Web.Controllers
 {
+    // [ServiceFilter(typeof(JwtAuthorizationFilter))]
     public class FishController : FMWebController
     {
         private readonly FishApiService _fishApiService;
@@ -41,7 +43,6 @@ namespace FishMarket.Web.Controllers
             return View();
         }
 
-        // [ServiceFilter(typeof(NotFoundFilter<Fish>))]
         public async Task<IActionResult> Update(int id)
         {
             var fishDto = await _fishApiService.GetByIdAsync(id);

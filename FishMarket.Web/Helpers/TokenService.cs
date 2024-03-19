@@ -11,7 +11,7 @@
                 SameSite = SameSiteMode.Strict, 
                 Expires = DateTimeOffset.UtcNow.AddDays(7) 
             };
-            httpContext.Response.Cookies.Append("token", token, cookieOptions);
+            httpContext.Response.Cookies.Append("JwtToken", token, cookieOptions);
         }
     }
 }

@@ -14,6 +14,5 @@ namespace FishMarket.Web.Controllers
             _apiURL = _configuration["API:URL"] ?? string.Empty;
             _imagePath = _configuration["API:ImagePath"] ?? string.Empty;
         }
-
     }
 }

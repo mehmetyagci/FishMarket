@@ -16,7 +16,7 @@ namespace FishMarket.API.Filters
 
             var user = (UserDto)context.HttpContext.Items["User"];
             if (user == null)
-                context.Result = new BadRequestObjectResult(ResponseDto<NoContentDto>.Fail(StatusCodes.Status401Unauthorized, "Unauthorized"));
+                context.Result = new UnauthorizedObjectResult(ResponseDto<NoContentDto>.Fail(StatusCodes.Status401Unauthorized, "Unauthorized"));
         }
     }
 }
