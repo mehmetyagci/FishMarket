@@ -10,19 +10,12 @@ namespace FishMarket.Web.Controllers
     {
         private readonly FishApiService _fishApiService;
         private readonly IMapper _mapper;
-        private readonly IConfiguration _configuration;
-
-        private readonly string _apiURL;
-        private readonly string _imagePath;
-
 
         public FishController(FishApiService fishApiService, IMapper mapper, IConfiguration configuration)
+            : base(configuration)
         {
             _fishApiService = fishApiService;
             _mapper = mapper;
-            _configuration = configuration;
-            _apiURL = _configuration["API:URL"];
-            _imagePath = _configuration["API:ImagePath"];
         }
 
         public async Task<IActionResult> Index()

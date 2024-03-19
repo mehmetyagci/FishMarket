@@ -1,4 +1,5 @@
 using FishMarket.Service.Infrastructure;
+using FishMarket.Web.Helpers;
 using FishMarket.Web.Services;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -10,10 +11,13 @@ namespace FishMarket.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHttpClient<FishApiService>(opt =>
+            {
+                opt.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
+            });
+            builder.Services.AddHttpClient<UserApiService>(opt =>
             {
                 opt.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
             });
@@ -26,6 +30,8 @@ namespace FishMarket.Web
             #region Auto Mapper Configuration
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #endregion Auto Mapper Configuration
+
+            builder.Services.AddTransient<TokenService>();
 
             var app = builder.Build();
 
@@ -46,7 +52,7 @@ namespace FishMarket.Web
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Fish}/{action=Index}/{id?}");
 
             app.Run();
         }

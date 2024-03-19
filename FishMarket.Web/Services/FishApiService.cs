@@ -5,6 +5,7 @@ namespace FishMarket.Web.Services
     public class FishApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly string apiHeader = "Fish/";
 
         public FishApiService(HttpClient httpClient)
         {
@@ -13,13 +14,13 @@ namespace FishMarket.Web.Services
 
         public async Task<List<FishDto>> GetAllAsync()
         {
-            var response = await _httpClient.GetFromJsonAsync<ResponseDto<List<FishDto>>>("Fish");
+            var response = await _httpClient.GetFromJsonAsync<ResponseDto<List<FishDto>>>(apiHeader);
             return response.Data;
         }
 
         public async Task<FishDto> GetByIdAsync(long id)
         {
-            var response = await _httpClient.GetFromJsonAsync<ResponseDto<FishDto>>($"Fish/{id}");
+            var response = await _httpClient.GetFromJsonAsync<ResponseDto<FishDto>>($"{apiHeader}/{id}");
             return response.Data;
         }
 
@@ -58,12 +59,12 @@ namespace FishMarket.Web.Services
                 }
             }
 
-            var response = await _httpClient.PutAsync("Fish", formData);
+            var response = await _httpClient.PutAsync(apiHeader, formData);
             return response.IsSuccessStatusCode;
         }
         public async Task<bool> DeleteAsync(long id)
         {
-            var response = await _httpClient.DeleteAsync($"Fish/{id}");
+            var response = await _httpClient.DeleteAsync($"{apiHeader}/{id}");
             return response.IsSuccessStatusCode;
         }
     }
