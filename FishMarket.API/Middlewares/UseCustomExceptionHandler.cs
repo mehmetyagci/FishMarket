@@ -28,7 +28,7 @@ namespace FishMarket.API.Middlewares
                     context.Response.StatusCode = statusCode;
                     //TODO: 500 Server hataları için, detay yaplaşmayan bir hata fırlat ve hatayı logla.
                     var errorMessage = GetFullErrorMessage(exceptionFeature.Error);
-                    // logger.LogError(errorMessage, "An unhandled exception occurred.");
+                    logger.LogError(errorMessage, "An unhandled exception occurred.");
                     var response = ResponseDto<NoContentDto>.Fail(statusCode, errorMessage);
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                 });
