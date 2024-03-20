@@ -1,4 +1,5 @@
 ﻿using FishMarket.Dto;
+using FishMarket.Service.Filters;
 using FishMarket.Web.Helpers;
 using FishMarket.Web.Services;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FishMarket.Web.Controllers
 {
+    [FMAllowAnonymous]
     public class UserController : FMWebController
     {
         private readonly UserApiService _userApiService;
@@ -59,6 +61,7 @@ namespace FishMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            Response.Cookies.Delete("JwtToken");
             return View();
         }
     }

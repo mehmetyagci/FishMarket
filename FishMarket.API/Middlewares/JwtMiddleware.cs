@@ -20,7 +20,6 @@ namespace FishMarket.API.Middlewares
                 var response = await userService.GetByIdAsync(userId.Value);
                 context.Items["User"] = response.Data;
             }
-
             await _next(context);
         }
     }

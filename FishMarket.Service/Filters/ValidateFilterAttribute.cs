@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FishMarket.API.Filters
+namespace FishMarket.Service.Filters
 {
     public class ValidateFilterAttribute : ActionFilterAttribute
     {

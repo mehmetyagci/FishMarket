@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FishMarket.API.Filters;
+using FishMarket.Service.Filters;
 using FishMarket.Core.Services;
 using FishMarket.Dto;
 using Microsoft.AspNetCore.Mvc;

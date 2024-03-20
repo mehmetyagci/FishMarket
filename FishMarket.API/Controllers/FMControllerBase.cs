@@ -1,14 +1,11 @@
-﻿using FishMarket.API.Filters;
+﻿using FishMarket.Service.Filters;
 using FishMarket.Dto;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FishMarket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [FMAuthorize]
     public class FMControllerBase : ControllerBase
     {
         [NonAction]

@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using FishMarket.Dto;
-using FishMarket.Web.Filters;
 using FishMarket.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FishMarket.Web.Controllers
 {
-    // [ServiceFilter(typeof(JwtAuthorizationFilter))]
     public class FishController : FMWebController
     {
         private readonly FishApiService _fishApiService;

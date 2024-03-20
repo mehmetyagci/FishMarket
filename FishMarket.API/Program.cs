@@ -1,4 +1,4 @@
-using FishMarket.API.Filters;
+using FishMarket.Service.Filters;
 using FishMarket.API.Middlewares;
 using FishMarket.Core;
 using FishMarket.Core.Repositories;

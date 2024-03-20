@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FishMarket.Service.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FishMarket.Web.Controllers
 {
+    [FMAuthorize]
     public class FMWebController : Controller
     {
         protected readonly IConfiguration _configuration;
