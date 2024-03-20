@@ -62,6 +62,40 @@ namespace FishMarket.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Fish", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "60c39b56-ef92-4411-96d8-45a33d059f50.jpg",
+                            Name = "Hamsi",
+                            Price = 100.10m
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "53df3af8-19e2-4836-b3a2-e6c70ec7ec17.png",
+                            Name = "Levrek",
+                            Price = 200.20m
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "611e29ba-b49b-404b-a1da-3ebb9026c5cc.jpg",
+                            Name = "Lüfer",
+                            Price = 300.30m
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "150eafe9-360e-4208-9647-2a96a88e964b.jpg",
+                            Name = "Somon",
+                            Price = 400.40m
+                        });
                 });
 
             modelBuilder.Entity("FishMarket.Domain.User", b =>
@@ -107,6 +141,26 @@ namespace FishMarket.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "mehmetyagci53@gmail.com",
+                            IsEmailVerified = true,
+                            Password = "mehmetyagci53@gmail.com",
+                            VerificationToken = ""
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@fishmarket.com",
+                            IsEmailVerified = true,
+                            Password = "admin@fishmarket.com",
+                            VerificationToken = ""
+                        });
                 });
 #pragma warning restore 612, 618
         }

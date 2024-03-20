@@ -1,13 +1,18 @@
 using FishMarket.Core.Services;
+using FishMarket.Dto.Validations;
+using FishMarket.Dto;
 using FishMarket.Service.Helpers;
 using FishMarket.Service.Infrastructure;
 using FishMarket.Service.Services;
 using FishMarket.Web.Helpers;
 using FishMarket.Web.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FishMarket.Service.Filters;
+using FluentValidation.AspNetCore;
 
 namespace FishMarket.Web
 {
@@ -19,7 +24,8 @@ namespace FishMarket.Web
 
             builder.Logging.AddLog4Net("log4net.config");
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddFluentValidation();  
 
             builder.Services.AddHttpContextAccessor();
 
@@ -38,12 +44,18 @@ namespace FishMarket.Web
                 options.MultipartBodyLengthLimit = 5 * 1024 * 1024; // 5 MB in bytes
             });
 
-
             #region Auto Mapper Configuration
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #endregion Auto Mapper Configuration
 
             builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+            builder.Services.AddTransient<IValidator<FishCreateDto>, FishCreateDtoValidator>();
+            builder.Services.AddTransient<IValidator<FishUpdateDto>, FishUpdateDtoValidator>();
+
+            builder.Services.AddTransient<IValidator<UserCreateDto>, UserCreateDtoValidator>();
+            builder.Services.AddTransient<IValidator<UserUpdateDto>, UserUpdateDtoValidator>();
+            builder.Services.AddTransient<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 
             builder.Services.AddScoped<IJwtService, JwtService>();
 

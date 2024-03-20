@@ -11,9 +11,7 @@ namespace FishMarket.API.Controllers
     {
         private readonly IFishService _fishService;
 
-        public FishController(
-            IFishService fishService,
-            IMapper mapper)
+        public FishController(IFishService fishService)
         {
             _fishService = fishService;
         }

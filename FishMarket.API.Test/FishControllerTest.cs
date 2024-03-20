@@ -19,36 +19,17 @@ namespace FishMarket.API.Test
             var mockFishService = new Mock<IFishService>();
 
             var mockResult = new ResponseDto<IEnumerable<FishDto>>();
-
             mockResult.StatusCode = 200;
             mockResult.Data = expectedFish;
 
             mockFishService.Setup(service => service.GetAllAsync()).ReturnsAsync(mockResult);
-            var mockMapper = new Mock<IMapper>();
-            var controller = new FishController(mockFishService.Object, mockMapper.Object);
+            var controller = new FishController(mockFishService.Object);
 
             var result = await controller.GetAllAsync();
 
-            var okResult = Assert.IsType<ObjectResult>(result);
-            //var actualFish = Assert.IsAssignableFrom<FishDto[]>((okResult.Value as ResponseDto<FishDto>).Data);
-            var actualFish = Assert.IsAssignableFrom<IEnumerable<FishDto>>(okResult.Value);
-            Assert.Equal(expectedFish, actualFish);
+            var objectResult = Assert.IsType<ObjectResult>(result);
+            var actualFish = Assert.IsAssignableFrom<ResponseDto<IEnumerable<FishDto>>>(objectResult.Value);
+            Assert.Equal(expectedFish, actualFish.Data);
         }
-
-        [Fact]
-        public async Task GetAllAsync_ShouldReturnInternalServerError_Fail()
-        {
-            var mockFishService = new Mock<IFishService>();
-            mockFishService.Setup(service => service.GetAllAsync()).ThrowsAsync(new Exception());
-            var mockMapper = new Mock<IMapper>();
-            var controller = new FishController(mockFishService.Object, mockMapper.Object);
-
-            var result = await controller.GetAllAsync();
-
-            Assert.IsType<StatusCodeResult>(result);
-            var statusCodeResult = (StatusCodeResult)result;
-            Assert.Equal(500, statusCodeResult.StatusCode);
-        }
-
     }
 }

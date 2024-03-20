@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishMarket.Data.Migrations
 {
     [DbContext(typeof(FishMarketDbContext))]
-    [Migration("20240315195258_fishtablechanged2")]
-    partial class fishtablechanged2
+    [Migration("20240320214006_seeddata")]
+    partial class seeddata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace FishMarket.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Image")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -64,6 +65,40 @@ namespace FishMarket.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Fish", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "60c39b56-ef92-4411-96d8-45a33d059f50.jpg",
+                            Name = "Hamsi",
+                            Price = 100.10m
+                        },
+                        new
+                        {
+                            Id = -2L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "53df3af8-19e2-4836-b3a2-e6c70ec7ec17.png",
+                            Name = "Levrek",
+                            Price = 200.20m
+                        },
+                        new
+                        {
+                            Id = -3L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "611e29ba-b49b-404b-a1da-3ebb9026c5cc.jpg",
+                            Name = "Lüfer",
+                            Price = 300.30m
+                        },
+                        new
+                        {
+                            Id = -4L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "150eafe9-360e-4208-9647-2a96a88e964b.jpg",
+                            Name = "Somon",
+                            Price = 400.40m
+                        });
                 });
 
             modelBuilder.Entity("FishMarket.Domain.User", b =>
@@ -82,8 +117,11 @@ namespace FishMarket.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsEmailVerified")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -96,12 +134,36 @@ namespace FishMarket.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("VerificationToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("User", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "mehmetyagci53@gmail.com",
+                            IsEmailVerified = true,
+                            Password = "mehmetyagci53@gmail.com",
+                            VerificationToken = ""
+                        },
+                        new
+                        {
+                            Id = -2L,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@fishmarket.com",
+                            IsEmailVerified = true,
+                            Password = "admin@fishmarket.com",
+                            VerificationToken = ""
+                        });
                 });
 #pragma warning restore 612, 618
         }

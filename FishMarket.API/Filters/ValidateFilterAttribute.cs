@@ -1,8 +1,11 @@
 ﻿using FishMarket.Dto;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace FishMarket.API.Filters
+namespace FishMarket.Service.Filters
 {
     public class ValidateFilterAttribute : ActionFilterAttribute
     {
