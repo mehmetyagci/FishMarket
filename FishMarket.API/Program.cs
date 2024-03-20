@@ -25,6 +25,8 @@ namespace FishMarket.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Logging.AddLog4Net("log4net.config");
+
             // Add services to the container.
             builder.Services
                 .AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()))
@@ -88,10 +90,10 @@ namespace FishMarket.API
             }
 
             app.UseHttpsRedirection();
-            app.UseCustomException();
+            app.UseCustomException(app.Logger);
             app.UseStaticFiles();    
 
-            app.UseMiddleware<JWTMiddleware>();
+            app.UseMiddleware<JwtMiddleware>();
 
             app.MapControllers();
 

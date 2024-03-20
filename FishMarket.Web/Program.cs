@@ -17,6 +17,8 @@ namespace FishMarket.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Logging.AddLog4Net("log4net.config");
+
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddHttpContextAccessor();

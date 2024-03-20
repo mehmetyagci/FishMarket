@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FishMarket.API.Controllers
 {
-    [FMAuthorize]
+    [FMAuthorize(forAPI:true)]
     public class FishController : FMControllerBase
     {
         private readonly IFishService _fishService;

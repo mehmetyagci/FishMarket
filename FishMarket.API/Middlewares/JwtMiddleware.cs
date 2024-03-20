@@ -2,11 +2,11 @@
 
 namespace FishMarket.API.Middlewares
 {
-    public class JWTMiddleware
+    public class JwtMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public JWTMiddleware(RequestDelegate next)
+        public JwtMiddleware(RequestDelegate next)
         {
             _next = next;
         }

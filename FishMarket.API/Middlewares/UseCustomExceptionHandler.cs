@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Diagnostics;
 using FishMarket.Service.Exceptions;
 using System.Text.Json;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace FishMarket.API.Middlewares
 {
     public static class UseCustomExceptionHandler
     {
-        public static void UseCustomException(this IApplicationBuilder app)
+        public static void UseCustomException(this IApplicationBuilder app, ILogger logger) 
         {
             app.UseExceptionHandler(config =>
             {
@@ -27,6 +28,7 @@ namespace FishMarket.API.Middlewares
                     context.Response.StatusCode = statusCode;
                     //TODO: 500 Server hataları için, detay yaplaşmayan bir hata fırlat ve hatayı logla.
                     var errorMessage = GetFullErrorMessage(exceptionFeature.Error);
+                    // logger.LogError(errorMessage, "An unhandled exception occurred.");
                     var response = ResponseDto<NoContentDto>.Fail(statusCode, errorMessage);
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                 });
@@ -45,5 +47,4 @@ namespace FishMarket.API.Middlewares
             return message;
         }
     }
-
 }
