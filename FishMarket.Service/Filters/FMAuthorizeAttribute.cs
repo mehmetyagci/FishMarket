@@ -32,8 +32,14 @@ namespace FishMarket.Service.Filters
                 var jwtService = serviceProvider.GetService(typeof(IJwtService)) as IJwtService;
 
                 var jwtToken = context.HttpContext.Request.Cookies["JwtToken"];
+                var userEmail = context.HttpContext.Request.Cookies["UserEmail"];
+
                 if (string.IsNullOrEmpty(jwtToken))
                 {
+                    if(userEmail != null && !string.IsNullOrEmpty(userEmail))
+                    {
+                        context.HttpContext.Response.Cookies.Delete("UserEmail");
+                    }
                     context.Result = new RedirectToActionResult("Login", "User", null);
                     return;
                 }
@@ -41,6 +47,11 @@ namespace FishMarket.Service.Filters
                 var userId = jwtService.ValidateToken(jwtToken);
                 if (!userId.HasValue)
                 {
+                    context.HttpContext.Response.Cookies.Delete("JwtToken");
+                    if (userEmail != null && !string.IsNullOrEmpty(userEmail))
+                    {
+                        context.HttpContext.Response.Cookies.Delete("UserEmail");
+                    }
                     context.Result = new RedirectToActionResult("Login", "User", null);
                 }
             }

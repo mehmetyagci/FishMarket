@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FishMarket.Service.Exceptions;
+using FishMarket.Service.Helpers;
+using Microsoft.Extensions.Options;
 
 namespace FishMarket.Service.Services
 {
@@ -17,6 +19,7 @@ namespace FishMarket.Service.Services
     {
         private readonly IJwtService _jwtService;
         private readonly IEmailService _emailService;
+        private readonly AppSettings _appSettings;
 
         private readonly IRepository<User> _repository;
 
@@ -26,6 +29,7 @@ namespace FishMarket.Service.Services
         public UserService(
             IJwtService jwtService,
             IEmailService emailService,
+            IOptions<AppSettings> appSettings,
             IRepository<User> repository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
@@ -36,6 +40,7 @@ namespace FishMarket.Service.Services
         {
             _jwtService = jwtService;
             _emailService = emailService;
+            _appSettings = appSettings.Value;
             _repository = repository;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
@@ -56,7 +61,7 @@ namespace FishMarket.Service.Services
 
             #region Token Creation and Related to user
             var token = Guid.NewGuid().ToString();
-            var verificationLink = $"https://yourdomain.com/verify-email?email={userRegisterDto.Email}&token={token}";
+            var verificationLink = $"{_appSettings.WebAppURL}verifyemail?email={userRegisterDto.Email}&token={token}";
 
             await _emailService.SendEmailAsync(new EmailDto
             {
@@ -86,6 +91,7 @@ namespace FishMarket.Service.Services
 
             var response = new UserAuthenticateResponseDto();
             response.Token = _jwtService.GenerateToken(user);
+            response.Email = userRegisterDto.Email;
             return ResponseDto<UserAuthenticateResponseDto>.Success(StatusCodes.Status200OK, response);
         }
 

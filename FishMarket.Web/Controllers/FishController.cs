@@ -8,10 +8,10 @@ namespace FishMarket.Web.Controllers
 {
     public class FishController : FMWebController
     {
-        private readonly FishApiService _fishApiService;
+        private readonly IFishApiService _fishApiService;
         private readonly IMapper _mapper;
 
-        public FishController(FishApiService fishApiService, IMapper mapper, IConfiguration configuration)
+        public FishController(IFishApiService fishApiService, IMapper mapper, IConfiguration configuration)
             : base(configuration)
         {
             _fishApiService = fishApiService;

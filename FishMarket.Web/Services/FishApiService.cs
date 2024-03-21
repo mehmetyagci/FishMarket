@@ -1,17 +1,21 @@
 ﻿using FishMarket.Dto;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace FishMarket.Web.Services
 {
-    public class FishApiService
+    public class FishApiService : IFishApiService
     {
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly string apiHeader = "Fish/";
+        private readonly string _apiBaseUrl;
+        private readonly string _apiRoot = "Fish/";
 
-        public FishApiService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor) 
+        public FishApiService(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor, IConfiguration configuration) 
         {
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient("FishApiHttpClient");
+            _apiBaseUrl = configuration["API:Url"] + "api/";
+            _httpClient.BaseAddress = new Uri(_apiBaseUrl);
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -24,14 +28,14 @@ namespace FishMarket.Web.Services
         public async Task<List<FishDto>> GetAllAsync()
         {
             AddJwtTokenToRequest();
-            var response = await _httpClient.GetFromJsonAsync<ResponseDto<List<FishDto>>>(apiHeader);
+            var response = await _httpClient.GetFromJsonAsync<ResponseDto<List<FishDto>>>(_apiRoot);
             return response.Data;
         }
 
         public async Task<FishDto> GetByIdAsync(long id)
         {
             AddJwtTokenToRequest();
-            var response = await _httpClient.GetFromJsonAsync<ResponseDto<FishDto>>($"{apiHeader}{id}");
+            var response = await _httpClient.GetFromJsonAsync<ResponseDto<FishDto>>($"{_apiRoot}{id}");
             return response.Data;
         }
 
@@ -51,7 +55,7 @@ namespace FishMarket.Web.Services
                 }
             }
 
-            var response = await _httpClient.PostAsync(apiHeader, formData);
+            var response = await _httpClient.PostAsync(_apiRoot, formData);
             if (!response.IsSuccessStatusCode) return null;
             var responseBody = await response.Content.ReadFromJsonAsync<ResponseDto<FishDto>>();
             return responseBody.Data;
@@ -73,13 +77,13 @@ namespace FishMarket.Web.Services
                 }
             }
 
-            var response = await _httpClient.PutAsync(apiHeader, formData);
+            var response = await _httpClient.PutAsync(_apiRoot, formData);
             return response.IsSuccessStatusCode;
         }
         public async Task<bool> DeleteAsync(long id)
         {
             AddJwtTokenToRequest();
-            var response = await _httpClient.DeleteAsync($"{apiHeader}{id}");
+            var response = await _httpClient.DeleteAsync($"{_apiRoot}{id}");
             return response.IsSuccessStatusCode;
         }
     }

@@ -46,6 +46,7 @@ namespace FishMarket.API.Test
                 StatusCode = 200,
                 Data = new UserAuthenticateResponseDto
                 {
+                    Email = "email@email.com",
                     Token = "token",
                 }
             };

@@ -10,59 +10,123 @@ namespace FishMarket.Web.Controllers
     [FMAllowAnonymous]
     public class UserController : FMWebController
     {
-        private readonly UserApiService _userApiService;
+        private readonly IUserApiService _userApiService;
         private readonly TokenService _tokenService;
 
         public UserController(
-            UserApiService userApiService, IConfiguration configuration, TokenService tokenService)
+            IUserApiService userApiService, IConfiguration configuration, TokenService tokenService)
              : base(configuration)
         {
             _userApiService = userApiService;
             _tokenService = tokenService;
         }
 
+        private IActionResult RedirectIfLoggedIn()
+        {
+            var tokenValue = HttpContext.Request.Cookies["JwtToken"];
+            if (!string.IsNullOrEmpty(tokenValue))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return null; 
+        }
+
         public async Task<IActionResult> Register()
         {
+            IActionResult redirectResult = RedirectIfLoggedIn();
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
             return await Task.FromResult(View());
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterDto userRegisterDto)
         {
-            var token = await _userApiService.RegisterAsync(userRegisterDto);
-            return RedirectToAction("VerifyEmail", "User");
+            var result = await _userApiService.RegisterAsync(userRegisterDto);
+            if (result)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to register user. Please try again.");
+                ViewBag.ErrorMessage = "Failed to register user. Please try again.";
+            }
+            return View(userRegisterDto);
         }
 
-        public async Task<IActionResult> VerifyEmail()
+
+        [HttpGet("verifyemail")]
+        public IActionResult VerifyEmailGet([FromQuery] UserVerifyEmailDto userVerifyEmailDto)
         {
-            return await Task.FromResult(View());
+            IActionResult redirectResult = RedirectIfLoggedIn();
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
+            return View("VerifyEmail", userVerifyEmailDto);
         }
 
-        [HttpPost]
+        [HttpPost("verifyemail")]
         public async Task<IActionResult> VerifyEmail(UserVerifyEmailDto userVerifyEmailDto)
         {
-            var token = await _userApiService.VerifyEmail(userVerifyEmailDto);
-            return RedirectToAction("Login", "User");
+            if (string.IsNullOrEmpty(userVerifyEmailDto.Email) || string.IsNullOrEmpty(userVerifyEmailDto.Token))
+            {
+                ModelState.AddModelError("", "Email and token are required for email verification.");
+                ViewBag.ErrorMessage = "Email and token are required for email verification.";
+            }
+
+            var result = await _userApiService.VerifyEmail(userVerifyEmailDto);
+            if (result)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to verify email. Please try again.");
+                ViewBag.ErrorMessage = "Failed to verify email. Please try again.";
+            }
+            return View("VerifyEmail", userVerifyEmailDto);
         }
+
 
         public async Task<IActionResult> Login()
         {
+            IActionResult redirectResult = RedirectIfLoggedIn();
+            if (redirectResult != null)
+            {
+                return redirectResult;
+            }
+
             return await Task.FromResult(View());
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(UserAuthenticateRequestDto userAuthenticateRequestDto)
         {
-            var token = await _userApiService.AuthenticateAsync(userAuthenticateRequestDto);
-            _tokenService.SetTokenCookie(token, HttpContext);
-            return RedirectToAction("Index", "Fish");
+            var result = await _userApiService.AuthenticateAsync(userAuthenticateRequestDto);
+            if (result != null && !string.IsNullOrEmpty(result.Token))
+            {
+                _tokenService.SetTokenCookie(result, HttpContext);
+                return RedirectToAction("Index", "Fish");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to login. Please try again.");
+                ViewBag.ErrorMessage = "Failed to login user. Please try again.";
+            }
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             Response.Cookies.Delete("JwtToken");
-            return await Task.FromResult(View());
+            Response.Cookies.Delete("UserEmail");
+            return await Task.FromResult(RedirectToAction("Index", "Home"));
         }
     }
 }

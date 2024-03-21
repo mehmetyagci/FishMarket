@@ -32,6 +32,10 @@ namespace FishMarket.Web.Controllers
                 case 500:
                     ViewBag.Message = "Internal Server Error!";
                     break;
+                default:
+                    ViewBag.Message = "There is an exception!";
+                    break;
+
             }
             _logger.LogError("Status Code:{statusCode}, Request Path: {path}",
                                             statusCode, statusCodeData.OriginalPath);

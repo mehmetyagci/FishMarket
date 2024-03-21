@@ -28,16 +28,8 @@ namespace FishMarket.Web
                 .AddFluentValidation();  
 
             builder.Services.AddHttpContextAccessor();
-
-            builder.Services.AddHttpClient<FishApiService>(opt =>
-            {
-                opt.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
-            });
-
-            builder.Services.AddHttpClient<UserApiService>(opt =>
-            {
-                opt.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
-            });
+           
+           
 
             builder.Services.Configure<FormOptions>(options =>
             {
@@ -57,6 +49,16 @@ namespace FishMarket.Web
             builder.Services.AddTransient<IValidator<UserUpdateDto>, UserUpdateDtoValidator>();
             builder.Services.AddTransient<IValidator<UserRegisterDto>, UserRegisterDtoValidator>();
 
+            builder.Services.AddHttpClient("FishApiHttpClient", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
+            });
+            builder.Services.AddScoped<IFishApiService, FishApiService>();
+            builder.Services.AddHttpClient("UserApiHttpClient", client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration["API:Url"] + "api/");
+            });
+            builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJwtService, JwtService>();
 
             builder.Services.AddTransient<TokenService>();

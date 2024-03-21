@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var tokenValue = HttpContextAccessor?.HttpContext?.Request?.Cookies["JwtToken"];
+    var userEmailValue = HttpContextAccessor?.HttpContext?.Request?.Cookies["UserEmail"];
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +31,23 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Fish" asp-action="Index">Fish</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (!string.IsNullOrEmpty(tokenValue))
+                        {
+                            <li class="nav-item">
+                                <form id="logoutForm" method="post" asp-area="" asp-controller="User" asp-action="Logout" class="nav-item">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

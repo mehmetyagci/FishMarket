@@ -1,8 +1,10 @@
-﻿namespace FishMarket.Web.Helpers
+﻿using FishMarket.Dto;
+
+namespace FishMarket.Web.Helpers
 {
     public class TokenService
     {
-        public void SetTokenCookie(string token, HttpContext httpContext)
+        public void SetTokenCookie(UserAuthenticateResponseDto response, HttpContext httpContext)
         {
             var cookieOptions = new CookieOptions
             {
@@ -11,7 +13,8 @@
                 SameSite = SameSiteMode.Strict, 
                 Expires = DateTimeOffset.UtcNow.AddDays(7) 
             };
-            httpContext.Response.Cookies.Append("JwtToken", token, cookieOptions);
+            httpContext.Response.Cookies.Append("JwtToken", response.Token, cookieOptions);
+            httpContext.Response.Cookies.Append("UserEmail", response.Email, cookieOptions);
         }
     }
 }

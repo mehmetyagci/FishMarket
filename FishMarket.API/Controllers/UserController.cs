@@ -30,7 +30,7 @@ namespace FishMarket.API.Controllers
         }
 
         [FMAllowAnonymous]
-        [HttpGet("verify-email")]
+        [HttpGet("verifyemail")]
         public async Task<IActionResult> VerifyEmail([FromQuery] UserVerifyEmailDto userVerifyEmailDto)
         {
             return CreateActionResult(await _userService.VerifyEmail(userVerifyEmailDto));
