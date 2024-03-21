@@ -23,12 +23,15 @@ namespace FishMarket.Web.Controllers
 
         private IActionResult RedirectIfLoggedIn()
         {
-            var tokenValue = HttpContext.Request.Cookies["JwtToken"];
-            if (!string.IsNullOrEmpty(tokenValue))
+            if (HttpContext?.Request?.Cookies != null)
             {
-                return RedirectToAction("Index", "Home");
+                var tokenValue = HttpContext.Request.Cookies["JwtToken"];
+                if (!string.IsNullOrEmpty(tokenValue))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            return null; 
+            return null;
         }
 
         public async Task<IActionResult> Register()
@@ -59,7 +62,7 @@ namespace FishMarket.Web.Controllers
 
 
         [HttpGet("verifyemail")]
-        public IActionResult VerifyEmailGet([FromQuery] UserVerifyEmailDto userVerifyEmailDto)
+        public async Task<IActionResult> VerifyEmailGet([FromQuery] UserVerifyEmailDto userVerifyEmailDto)
         {
             IActionResult redirectResult = RedirectIfLoggedIn();
             if (redirectResult != null)
@@ -124,8 +127,11 @@ namespace FishMarket.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            Response.Cookies.Delete("JwtToken");
-            Response.Cookies.Delete("UserEmail");
+            if (Response?.Cookies != null)
+            {
+                Response.Cookies.Delete("JwtToken");
+                Response.Cookies.Delete("UserEmail");
+            }
             return await Task.FromResult(RedirectToAction("Index", "Home"));
         }
     }
