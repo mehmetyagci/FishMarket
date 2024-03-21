@@ -51,7 +51,7 @@ namespace FishMarket.Web.Services
                 }
             }
 
-            var response = await _httpClient.PostAsync("Fish", formData);
+            var response = await _httpClient.PostAsync(apiHeader, formData);
             if (!response.IsSuccessStatusCode) return null;
             var responseBody = await response.Content.ReadFromJsonAsync<ResponseDto<FishDto>>();
             return responseBody.Data;
@@ -60,6 +60,7 @@ namespace FishMarket.Web.Services
         {
             AddJwtTokenToRequest();
             var formData = new MultipartFormDataContent();
+            formData.Add(new StringContent(fistUpdateDto.Id.ToString()), "Id");
             formData.Add(new StringContent(fistUpdateDto.Name), "Name");
             formData.Add(new StringContent(fistUpdateDto.Price.ToString()), "Price");
             if (fistUpdateDto.ImageFile != null)

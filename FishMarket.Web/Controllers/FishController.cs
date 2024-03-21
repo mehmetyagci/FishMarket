@@ -27,7 +27,7 @@ namespace FishMarket.Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            return await Task.FromResult(View());
         }
 
         [HttpPost]
@@ -35,8 +35,15 @@ namespace FishMarket.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _fishApiService.CreateAsync(fishCreateDto);
-                return RedirectToAction(nameof(Index));
+                var result = await _fishApiService.CreateAsync(fishCreateDto);
+                if (result == null)
+                {
+                    ModelState.AddModelError("", "Failed to create fish. Please try again.");
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View();
         }
@@ -53,16 +60,31 @@ namespace FishMarket.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _fishApiService.UpdateAsync(fishUpdateDto);
-                return RedirectToAction(nameof(Index));
+                var result = await _fishApiService.UpdateAsync(fishUpdateDto);
+                if (result)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Failed to update fish. Please try again.");
+                }
             }
             return View(fishUpdateDto);
         }
 
         public async Task<IActionResult> Delete(long id)
         {
-            await _fishApiService.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+            var result = await _fishApiService.DeleteAsync(id);
+            if (result)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to delete fish. Please try again.");
+                return View();
+            }
         }
     }
 }

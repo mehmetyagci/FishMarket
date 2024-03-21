@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Repository", "Fi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Web", "FishMarket.Web\FishMarket.Web.csproj", "{09E930D5-F953-46DF-B781-241C2343C425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.API.Test", "FishMarket.API.Test\FishMarket.API.Test.csproj", "{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.API.Test", "FishMarket.API.Test\FishMarket.API.Test.csproj", "{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Web.Test", "FishMarket.Web.Test\FishMarket.Web.Test.csproj", "{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

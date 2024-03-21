@@ -10,7 +10,7 @@ namespace FishMarket.API.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

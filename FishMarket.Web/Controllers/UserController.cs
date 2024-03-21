@@ -23,7 +23,7 @@ namespace FishMarket.Web.Controllers
 
         public async Task<IActionResult> Register()
         {
-            return View();
+            return await Task.FromResult(View());
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace FishMarket.Web.Controllers
 
         public async Task<IActionResult> VerifyEmail()
         {
-            return View();
+            return await Task.FromResult(View());
         }
 
         [HttpPost]
@@ -47,7 +47,7 @@ namespace FishMarket.Web.Controllers
 
         public async Task<IActionResult> Login()
         {
-            return View();
+            return await Task.FromResult(View());
         }
 
         [HttpPost]
@@ -62,7 +62,7 @@ namespace FishMarket.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             Response.Cookies.Delete("JwtToken");
-            return View();
+            return await Task.FromResult(View());
         }
     }
 }
