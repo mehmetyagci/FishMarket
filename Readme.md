@@ -1,6 +1,6 @@
 # FishMarket Uygulamasý
 
-FishMarket, bir .NET Core API ve .NET Core MVC projelerini içeren bir örnek uygulamadýr. Bu uygulama, balýk pazarý iþlemlerini simüle eder ve API üzerinden veri saðlar. 
+FishMarket, bir .NET Core API ve .NET Core MVC projelerini içeren bir uygulamadýr. Bu uygulama, balýk pazarý iþlemlerini simüle eder ve API üzerinden veri saðlar. 
 
 ## Kurulum
 
@@ -25,3 +25,18 @@ FishMarket, bir .NET Core API ve .NET Core MVC projelerini içeren bir örnek uygu
 5. FishMarket.API ve FishMarket.MVC projelerini Startup project olarak belirleyin ve Visual Studio'da çalýþtýrýn.
 
 6. API ve MVC projelerini baþlatýn ve FishMarket uygulamasýný kullanmaya baþlayýn.
+
+## Mimari
+
+FishMarket uygulamasý, Onion mimarisi kullanýlarak tasarlanmýþtýr. Katmanlar, birbirinden olabildiðince baðýmsýz olarak geliþtirilmiþtir ve aþaðýdaki gibi sýralanmýþtýr:
+
+- **Domain**: Sadece Domain Entity 'leri burada tanýmlanýr.  
+- **Data**: DbContext ve veritabaný schema tanýmlarý burada bulunur.
+- **Core**: Uygulamanýn genel yapýlandýrma ve temel hizmetleri bu katmanda yer alýr. Baðýmlýlýklarý yönetir ve uygulama boyunca kullanýlan çekirdek iþlevleri saðlar.
+- **Repository**: Veritabaný ile iletiþimi yöneten katmandýr. Veri tabaný iþlemleri bu katman aracýlýðýyla gerçekleþtirilir.
+- **Service**: Uygulamanýn iþ mantýðýný uygulayan hizmetlerin bulunduðu katmandýr. API katmanýndan gelen istekleri iþler ve tüm iþ mantýðý burada yürütülür.
+- **API**: Service katmanýnda yazýlan tüm süreçlerin kullanýlabilmesini saðlayan servisler saðlar. 
+- **MVC**: Web Katmaný, API katmanýna Http istekleri yaparak merkezi olarak 
+- **DTO**: Veri transfer nesnelerinin (DTO'larýn) tanýmlandýðý katmandýr. Veri tabanýndan alýnan veya API'den döndürülen verilerin taþýnmasýnda kullanýlýr. MVC uygulamasý da ayný DTO 'larý kullanýr.
+Bu katmanlar arasýnda net bir sýnýrlama ve iliþki saðlanarak, uygulamanýn bakýmý, geniþletilmesi ve test edilmesi kolaylaþtýrýlmýþtýr. 
+
