@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  fishmarket.api:
+    build:
+      context: .
+      dockerfile: ./FishMarket.API/Dockerfile
+    ports:
+      - "7169:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=FishMarket;User=sa;Password=FishMarket2024!
+    networks:
+      - fishmarket-network
+
+  fishmarket.web:
+    build:
+      context: .
+      dockerfile: ./FishMarket.Web/Dockerfile
+    ports:
+      - "7112:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - fishmarket-network
+
+networks:
+  fishmarket-network:
+    driver: nat  # Specify the NAT network driver
