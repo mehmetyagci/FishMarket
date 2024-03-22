@@ -38,6 +38,30 @@ FishMarket uygulamasý, Onion mimarisi kullanýlarak tasarlanmýþtýr. Katmanlar, bi
 - **API**: Service katmanýnda yazýlan tüm süreçlerin kullanýlabilmesini saðlayan servisler saðlar. 
 - **MVC**: Web Katmaný, API katmanýna Http istekleri yaparak merkezi olarak 
 - **DTO**: Veri transfer nesnelerinin (DTO'larýn) tanýmlandýðý katmandýr. Veri tabanýndan alýnan veya API'den döndürülen verilerin taþýnmasýnda kullanýlýr. MVC uygulamasý da ayný DTO 'larý kullanýr.
-Bu katmanlar arasýnda net bir sýnýrlama ve iliþki saðlanarak, uygulamanýn bakýmý, geniþletilmesi ve test edilmesi kolaylaþtýrýlmýþtýr. 
+ 
 ![Project Structure](Images/ProjectStructure.png)
+
+## Kullanýlan Kütüphaneler
+
+FishMarket uygulamasýnda aþaðýdaki kütüphaneler kullanýlmýþtýr:
+
+- **EntityFrameworkCore**: .NET Core uygulamalarý için ORM (Object-Relational Mapping) kütüphanesidir. Veritabaný iþlemlerini yönetmek için kullanýlýr.
+- **Automapper**: Nesneler arasýnda veri eþleme iþlemlerini kolaylaþtýrmak için kullanýlan bir kütüphanedir.
+- **FluentValidation**: Giriþ validasyonlarýný yapmak için kullanýlan bir kütüphanedir. 
+- **xUnit**: .NET uygulamalarý için bir test çerçevesidir. Birim testlerin yazýlmasý ve çalýþtýrýlmasý için kullanýlýr.
+- **log4Net**: .NET uygulamalarýnda günlük dosyalarýný yönetmek ve olaylarý kaydetmek için kullanýlan bir günlükleme kütüphanesidir.
+- **MailKit**: .NET uygulamalarý için e-posta gönderme iþlemlerini yönetmek için kullanýlan bir kütüphanedir.
+- **JWT token ile authentication**: JSON Web Token (JWT) kullanarak kimlik doðrulama ve yetkilendirme iþlemlerini saðlamak için kullanýlan bir kütüphanedir.
+
+## Uygulamanýn Kullanýmý
+
+FishMarket uygulamasý, temel olarak iki modülden oluþmaktadýr: API ve Web.
+
+- **API Modülü**: Fish ve User servislerini içerir. API modülündeki tüm Fish servisleri için kimlik doðrulamasý gereklidir. Bu servisler, kullanýcýlarýn balýk iþlemlerini yönetmelerine olanak tanýr. User servisleri için ise kimlik doðrulamasý gerekli deðildir.  
+![API Services](Images/API_Services.png)
+- **Web Modülü**: Kullanýcý arayüzünü saðlar ve API üzerinden FishMarket uygulamasýna eriþim saðlar. Web modülü, kullanýcýlarýn uygulamayý kullanarak balýk pazarý iþlemlerini gerçekleþtirmelerini saðlar. Kimlik doðrulamasý, kullanýcý giriþi için kullanýlýr ve Fish servislerine eriþim saðlamak için gereklidir.
+![Web UI](Images/WebUI.png)
+
+
+
 
