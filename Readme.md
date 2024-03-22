@@ -25,7 +25,3 @@ FishMarket, bir .NET Core API ve .NET Core MVC projelerini içeren bir örnek uygu
 5. FishMarket.API ve FishMarket.MVC projelerini Startup project olarak belirleyin ve Visual Studio'da çalýþtýrýn.
 
 6. API ve MVC projelerini baþlatýn ve FishMarket uygulamasýný kullanmaya baþlayýn.
-
-## Katkýda Bulunma
-
-Bu projeye katkýda bulunmak isterseniz, lütfen GitHub deposuna bir çekme isteði gönderin. Her türlü geri bildirimi, öneriyi veya sorun bildirimini memnuniyetle karþýlýyoruz.
