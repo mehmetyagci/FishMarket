@@ -39,4 +39,5 @@ FishMarket uygulamasý, Onion mimarisi kullanýlarak tasarlanmýþtýr. Katmanlar, bi
 - **MVC**: Web Katmaný, API katmanýna Http istekleri yaparak merkezi olarak 
 - **DTO**: Veri transfer nesnelerinin (DTO'larýn) tanýmlandýðý katmandýr. Veri tabanýndan alýnan veya API'den döndürülen verilerin taþýnmasýnda kullanýlýr. MVC uygulamasý da ayný DTO 'larý kullanýr.
 Bu katmanlar arasýnda net bir sýnýrlama ve iliþki saðlanarak, uygulamanýn bakýmý, geniþletilmesi ve test edilmesi kolaylaþtýrýlmýþtýr. 
+![Project Structure](Images/exampleProjectStructure.png)
 
