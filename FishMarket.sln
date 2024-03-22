@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Web", "FishMarke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.API.Test", "FishMarket.API.Test\FishMarket.API.Test.csproj", "{2FB9A4F8-DA26-420E-9272-6C8F9547C0EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishMarket.Web.Test", "FishMarket.Web.Test\FishMarket.Web.Test.csproj", "{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FishMarket.Web.Test", "FishMarket.Web.Test\FishMarket.Web.Test.csproj", "{23A8E4FF-4FFC-45D8-915C-C61E89A3EBE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA2421B1-CF64-4731-B7E2-8C692E7494C5}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
