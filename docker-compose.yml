@@ -1,3 +1,4 @@
+# docker-compose.yml
 version: '3.8'
 
 services:
@@ -12,6 +13,8 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db;Database=FishMarket;User=sa;Password=FishMarket2024!
     networks:
       - fishmarket-network
+    depends_on:
+      - fishmarket.db
 
   fishmarket.web:
     build:
@@ -24,6 +27,13 @@ services:
     networks:
       - fishmarket-network
 
+  fishmarket.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - ACCEPT_EULA=Y
+    networks:
+      - fishmarket-network
+
 networks:
   fishmarket-network:
-    driver: nat  # Specify the NAT network driver
